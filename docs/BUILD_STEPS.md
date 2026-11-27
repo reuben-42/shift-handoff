@@ -15,8 +15,8 @@ This is the order everything gets built in. It expands the plan's build plan (do
 | 00 | `step-00-plan` | Plan docs, CLAUDE.md, decisions | ✅ pushed |
 | 01 | `step-01-skeleton` | Repo skeleton, Makefile, CI, layer linters | ✅ pushed |
 | 02 | `step-02-domain-model` | Domain entities, value objects, shift pattern | ✅ pushed |
-| 03 | `step-03-domain-rules` | ChangeRules, detector, evidence pack, verifiers ✋ | ⏳ waiting on your choice |
-| 04 | `step-04-application` | Ports, DTOs, use cases, in-memory fakes | |
+| 03 | `step-03-domain-rules` | ChangeRules, detector, evidence pack, verifiers | ✅ pushed |
+| 04 | `step-04-application` | Ports, DTOs, use cases, in-memory fakes | ⏳ next |
 | 05 | `step-05-sqlite` | SQLite schema, fixtures, repositories | |
 | 06 | `step-06-llm-adapters` | ChatClient, Ollama, PromptBuilder, DraftParser, writer ✋ | |
 | 07 | `step-07-api` | FastAPI routers, schemas, composition root | |
@@ -66,7 +66,7 @@ Prototype scope (from the plan): 5 residents, 1 unit, hand-written fixtures, `Mi
 - **Layer:** domain only.
 - **Files:** `domain/rules/` (`ChangeRule` protocol, `MissedDoseRule`, `IncidentRule`), `domain/services/` (`ChangeDetector`, `PriorityCalculator`, `EvidencePackBuilder` → `EvidencePack`, `CitationVerifier`, `CoverageGuard`).
 - **Tests:** each rule below, at and above its threshold; the detector runs all rules and sorts by severity; the pack has one line per record (`[V231] 14:35 BP 98/60 HR 88 SpO2 95%`); the citation verifier drops claims citing unknown IDs; the coverage guard appends a templated claim for any uncovered high-severity change.
-- ✋ **The plan says to write the ChangeRule classes and verifiers yourself, because interviewers will ask you to explain them line by line.** Choose one: (a) I write them and you study them, or (b) I write the protocol, tests and stubs, and you fill in the bodies until the tests pass.
+- **Decided 2026-11-27:** Claude writes them; Reuben studies and reviews them line by line. Design notes: `MissedDoseRule` groups by medication (one line, many sources); `CitationVerifier` strips unknown IDs and flags the claim amber, or drops it if no valid ID is left; `CoverageGuard` counts a change as covered if any claim cites any of its evidence IDs.
 - **Done when:** every class has unit tests and the domain has zero non-stdlib imports.
 
 ### 04 · `step-04-application`
