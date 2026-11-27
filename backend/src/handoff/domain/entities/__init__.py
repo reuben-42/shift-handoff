@@ -1,5 +1,6 @@
 from handoff.domain.entities.baseline import Baseline
 from handoff.domain.entities.change import Change
+from handoff.domain.entities.evidence_pack import EvidenceLine, EvidencePack
 from handoff.domain.entities.handoff import (
     ChangeClaim,
     Claim,
@@ -26,6 +27,8 @@ __all__ = [
     "Change",
     "ChangeClaim",
     "Claim",
+    "EvidenceLine",
+    "EvidencePack",
     "Handoff",
     "HandoffDraft",
     "Incident",
