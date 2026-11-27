@@ -1,0 +1,1 @@
+"""Shift Handoff Copilot backend."""

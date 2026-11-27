@@ -1,0 +1,65 @@
+[project]
+name = "shift-handoff"
+version = "0.1.0"
+description = "Turns one nursing-home shift of synthetic chart data into a cited SBAR handoff per resident."
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.32",
+  "pydantic>=2.9",
+  "httpx>=0.27",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3",
+  "ruff>=0.8",
+  "import-linter>=2.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/handoff", "src/handoff_eval"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "."]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests", "sim"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+# --- Rule #1: Clean Architecture, enforced in CI (docs/PLAN.md) ---
+[tool.importlinter]
+root_packages = ["handoff", "handoff_eval"]
+include_external_packages = true
+
+[[tool.importlinter.contracts]]
+name = "Clean Architecture layers"
+type = "layers"
+layers = [
+  "handoff.infrastructure",
+  "handoff.adapters",
+  "handoff.application",
+  "handoff.domain",
+]
+
+[[tool.importlinter.contracts]]
+name = "Inner layers stay framework-free"
+type = "forbidden"
+source_modules = ["handoff.domain", "handoff.application"]
+forbidden_modules = ["fastapi", "pydantic", "openai", "httpx"]
+
+[[tool.importlinter.contracts]]
+name = "The app never imports eval"
+type = "forbidden"
+source_modules = ["handoff"]
+forbidden_modules = ["handoff_eval"]
