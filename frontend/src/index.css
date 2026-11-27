@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+/* UX rule: 16 px minimum body text, tablet (1024 px) first. */
+html {
+  font-size: 16px;
+}
