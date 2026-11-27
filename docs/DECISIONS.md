@@ -24,7 +24,7 @@ The plan assumes 3×8 everywhere. Making the pattern changeable at runtime means
 ### Data
 - Every record is timestamped, so **slicing by shift works under any pattern**. The PDF's `shifts` table is replaced by shifts *computed* from the active pattern and the date range of the data. (The simulator in step 11 still writes on a 24-hour clock.)
 - `ground_truth` stores the event **time** (plus its evidence IDs). The eval maps each event to a shift under whatever pattern is being evaluated.
-- `handoffs` gets a `pattern` column. The cache key is `(resident_id, shift_id, pattern)`, so switching patterns never serves a 3×8 handoff for a 12-hour shift.
+- `handoffs` gets a `pattern` column. The cache key is `(resident_id, shift_id, pattern)`, so switching patterns never serves a 3×8 handoff for a 12-hour shift. Custom patterns are named after their start times (e.g. `custom-3x@0600-1400-2200`), so the name alone is a safe cache key.
 - A `settings` table holds the active pattern. The default comes from the env var `SHIFT_PATTERN=3x8`.
 
 ### Application / API / UI

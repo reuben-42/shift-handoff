@@ -16,8 +16,8 @@ This is the order everything gets built in. It expands the plan's build plan (do
 | 01 | `step-01-skeleton` | Repo skeleton, Makefile, CI, layer linters | ✅ pushed |
 | 02 | `step-02-domain-model` | Domain entities, value objects, shift pattern | ✅ pushed |
 | 03 | `step-03-domain-rules` | ChangeRules, detector, evidence pack, verifiers | ✅ pushed |
-| 04 | `step-04-application` | Ports, DTOs, use cases, in-memory fakes | ⏳ next |
-| 05 | `step-05-sqlite` | SQLite schema, fixtures, repositories | |
+| 04 | `step-04-application` | Ports, DTOs, use cases, in-memory fakes | ✅ pushed |
+| 05 | `step-05-sqlite` | SQLite schema, fixtures, repositories | ⏳ next |
 | 06 | `step-06-llm-adapters` | ChatClient, Ollama, PromptBuilder, DraftParser, writer ✋ | |
 | 07 | `step-07-api` | FastAPI routers, schemas, composition root | |
 | 08 | `step-08-frontend-core` | Frontend domain + application | |
@@ -75,6 +75,7 @@ Prototype scope (from the plan): 5 residents, 1 unit, hand-written fixtures, `Mi
 - **Fakes:** `InMemoryResidentReader`, `InMemoryClinicalRecordReader`, `InMemoryHandoffStore`, `InMemorySettingsStore`, `FakeHandoffWriter`, `FixedClock`.
 - **Tests:** cache hit vs `force`; the verifier is applied before saving; the board is sorted by priority; switching the pattern changes the windows and cache keys; app errors are raised.
 - **Done when:** use-case tests pass with no database and no network.
+- **As built:** `EvidenceGatherer` (gather + baseline) and `ActivePattern` (settings or default) are shared application services. `GetUnitBoard` falls back to rules-only priority when no handoff is cached yet, so the board never calls the model. `GetHandoff` is cache-only (for public mode); the API's GET will use `GenerateHandoff(force=False)` in dev.
 
 ### 05 · `step-05-sqlite`
 - **Layer:** adapters (`persistence/sqlite/`) + `infrastructure/db.py`.
