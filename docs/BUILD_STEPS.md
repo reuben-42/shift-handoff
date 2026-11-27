@@ -14,8 +14,8 @@ This is the order everything gets built in. It expands the plan's build plan (do
 |---|---|---|---|
 | 00 | `step-00-plan` | Plan docs, CLAUDE.md, decisions | ✅ pushed |
 | 01 | `step-01-skeleton` | Repo skeleton, Makefile, CI, layer linters | ✅ pushed |
-| 02 | `step-02-domain-model` | Domain entities, value objects, shift pattern | ⏳ next |
-| 03 | `step-03-domain-rules` | ChangeRules, detector, evidence pack, verifiers ✋ | |
+| 02 | `step-02-domain-model` | Domain entities, value objects, shift pattern | ✅ pushed |
+| 03 | `step-03-domain-rules` | ChangeRules, detector, evidence pack, verifiers ✋ | ⏳ waiting on your choice |
 | 04 | `step-04-application` | Ports, DTOs, use cases, in-memory fakes | |
 | 05 | `step-05-sqlite` | SQLite schema, fixtures, repositories | |
 | 06 | `step-06-llm-adapters` | ChatClient, Ollama, PromptBuilder, DraftParser, writer ✋ | |
